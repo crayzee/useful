@@ -16,6 +16,8 @@ passlib = "^1.7.4"
 bcrypt = "^3.2.0"
 python-multipart = "^0.0.5"
 psycopg2-binary = "^2.8.6"
+Authlib = "^0.15.3"
+httpx = "^0.16.1"
 
 [tool.poetry.dev-dependencies]
 

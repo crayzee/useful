@@ -18,6 +18,7 @@ python-multipart = "^0.0.5"
 psycopg2-binary = "^2.8.6"
 Authlib = "^0.15.3"
 httpx = "^0.16.1"
+typer = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 

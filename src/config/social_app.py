@@ -1,7 +1,6 @@
 from authlib.integrations.starlette_client import OAuth
 
 
-
 social_oauth = OAuth()
 
 social_oauth.register(

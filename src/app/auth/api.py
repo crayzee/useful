@@ -26,17 +26,13 @@ from .service import (
 )
 
 
-
-
-
 auth_router = APIRouter()
-
 
 
 @auth_router.post("/login/access-token", response_model=Token)
 def login_access_token(
-        db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends() # == form_data: OAuth2PasswordRequestForm = Depends(OAuth2PasswordRequestForm)
-    ):
+        db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()
+):
     """ OAuth2 compatible token login, get an access token for future requests
     """
     user = crud.user.authenticate(
@@ -74,9 +70,6 @@ def confirm_email(uuid: VerificationOut, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Not found")
 
 
-
-
-
 @auth_router.post("/password-recovery/{email}", response_model=Msg)
 def recover_password(email: str, db: Session = Depends(get_db)):
     """ Password Recovery
@@ -95,7 +88,7 @@ def recover_password(email: str, db: Session = Depends(get_db)):
 @auth_router.post("/reset-password/", response_model=Msg)
 def reset_password(
         token: str = Body(...), new_password: str = Body(...), db: Session = Depends(get_db)
-    ):
+):
     """ Reset password
     """
     email = verify_password_reset_token(token)
@@ -113,23 +106,23 @@ def reset_password(
     crud.user.change_password(db, user, hashed_password)
     
     return {"msg": "Password updated successfully"}
-    
-    
-    
-    
+
+
 @auth_router.get('/')
 async def login(request: Request):
-    print (request)
     github = social_oauth.create_client('github')
     redirect_uri = 'http://localhost:8000/api/v1/auth/github_login'
     return await github.authorize_redirect(request, redirect_uri)
-    
-    
+
+
 @auth_router.get('/github_login')
 async def authorize(request: Request, db: Session = Depends(get_db)):
     token = await social_oauth.github.authorize_access_token(request)
+    print(token)
     resp = await social_oauth.github.get('user', token=token)
+    print(resp)
     profile = resp.json()
+    print(profile)
     prof = schemas.SocialAccount(
         account_id=profile.get("id"),
         account_url=profile.get("html_url"),

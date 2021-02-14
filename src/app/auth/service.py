@@ -19,6 +19,7 @@ from .schemas import VerificationOut, VerificationCreate
 
 password_reset_jwt_subject = "preset"
 
+
 def registration_user(new_user: schemas.UserCreateInRegistration, db: Session) -> bool:
     """Регистрация пользователя"""
     if crud.user.get_by_username_email(db, username=new_user.username, email=new_user.email):

@@ -25,8 +25,7 @@ CREATE TABLE IF NOT EXISTS "socialaccount" (
 );
 COMMENT ON TABLE "socialaccount" IS 'Model social accounts';
 CREATE TABLE IF NOT EXISTS "verification" (
-    "id" SERIAL NOT NULL PRIMARY KEY,
-    "link" UUID NOT NULL,
+    "link" UUID NOT NULL  PRIMARY KEY,
     "user_id" INT NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE
 );
 COMMENT ON TABLE "verification" IS 'Модель для подтверждения регистрации пользователя';

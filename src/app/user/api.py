@@ -19,3 +19,8 @@ def user_me(current_user: models.User = Depends(get_user)):
 @user_router.post('/test/create', response_model=schemas.User_G_Pydantic)
 async def test_create(user: schemas.UserCreateInRegistration):
     return await service.user_s.create_user(user)
+
+
+@user_router.post('/test/update', response_model=schemas.User_G_Pydantic)
+async def test_update(user: schemas.UserUpdate):
+    return await service.user_s.update(user)

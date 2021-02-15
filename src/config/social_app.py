@@ -3,6 +3,8 @@ from authlib.integrations.starlette_client import OAuth
 
 social_oauth = OAuth()
 
+redirect_uri = 'http://localhost:8000/api/v1/auth/github_login'
+
 social_oauth.register(
     name='github',
     client_id='99118809b9098fa3fa00',

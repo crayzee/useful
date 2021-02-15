@@ -36,6 +36,7 @@ class UserCreateInRegistration(BaseModel):
     email: EmailStr
     password: str
     first_name: str
+    avatar: str = None
 
     class Config:
         orm_mode = True
@@ -66,12 +67,26 @@ class SocialAccount(BaseModel):
     account_url: str
     account_login: str
     account_name: str = None
-    avatar_url: str
     provider: str
+    user: UserCreateInRegistration
     
     class Config:
         orm_mode = True
-    
+
+
+class SocialAccountGet(BaseModel):
+    """ Schema social account
+    """
+    account_id: int
+    account_url: str
+    account_login: str
+    account_name: str = None
+    provider: str
+    avatar_url: str
+
+    class Config:
+        orm_mode = True
+
 
 class UserPublic(UserBase):
     """ For public profile user

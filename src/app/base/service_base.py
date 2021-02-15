@@ -35,3 +35,6 @@ class BaseService:
 
     async def delete(self, schema):
         pass
+
+    async def get_obj(self, **kwargs):
+        return await self.model.get_or_none(**kwargs)

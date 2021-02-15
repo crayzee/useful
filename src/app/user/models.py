@@ -16,10 +16,6 @@ class User(models.Model):
     is_superuser = fields.BooleanField(default=False)
     avatar = fields.CharField(max_length=100, null=True)
 
-    # async def save(self, *args, **kwargs) -> None:
-    #     print(self.password)
-    #     self.password = get_password_hash(self.password)
-    #     await super().create(*args, **kwargs)
 
 class SocialAccount(models.Model):
     """ Model social accounts
@@ -33,5 +29,8 @@ class SocialAccount(models.Model):
     account_login = fields.CharField(max_length=100)
     account_name = fields.CharField(max_length=100)
     provider = fields.CharField(max_length=100)
-    
-    user = fields.ForeignKeyField('models.User', related_name='social_accounts')
+    # user = fields.ForeignKeyField('models.User', related_name='social_accounts')
+
+    user: fields.ForeignKeyNullableRelation[User] = fields.ForeignKeyField(
+        "models.User", related_name="social_accounts"
+    )

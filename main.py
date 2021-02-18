@@ -6,7 +6,6 @@ from tortoise.contrib.fastapi import register_tortoise
 
 from src.config import settings
 from src.app import routers
-from src.db.session import SessionLocal
 
 
 app = FastAPI(
@@ -17,30 +16,31 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = settings.BACKEND_CORS_ORIGINS,
-    allow_methods = ["*"],
-    allow_headers = ["*"],
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
 
-@app.middleware("http")
-async def db_session_middleware(request: Request, call_next):
-    '''Позволяет подкручивать local session к нашим запросам.'''
-    response = Response("Internal server error", status_code=500)
-    try:
-        request.state.db = SessionLocal()
-        response = await call_next(request)
-    finally:
-        request.state.db.close()
-    return response
+# @app.middleware("http")
+# async def db_session_middleware(request: Request, call_next):
+#     '''Позволяет подкручивать local session к нашим запросам.'''
+#     response = Response("Internal server error", status_code=500)
+#     try:
+#         request.state.db = SessionLocal()
+#         response = await call_next(request)
+#     finally:
+#         request.state.db.close()
+#     return response
 
 app.include_router(routers.api_router, prefix=settings.API_V1_STR)
 
 
 register_tortoise(
     app,
-    db_url="postgres://postgres:oilgas@localhost:5432/useful_test_tortoise",
+    #db_url="postgres://postgres:oilgas@localhost:5432/useful_test_tortoise",
+    db_url=settings.DATABASE_URI,
     modules={"models": ["src.app.user.models", "src.app.auth.models", "aerich.models"]},
     generate_schemas=True,
     add_exception_handlers=True,

@@ -23,16 +23,10 @@ BACKEND_CORS_ORIGINS = [
 ]
 
 # Data Base via Docker 
-# SQLALCHEMY_DATABASE_URI2 = (
-#     f'postgresql://{os.environ.get("POSTGRES_USER")}:'
-#     f'{os.environ.get("POSTGRES_PASSWORD")}@'
-#     f'{os.environ.get("POSTGRES_HOST")}/'
-#     f'{os.environ.get("POSTGRES_DB")}'
-# )
-# Data Base
-SQLALCHEMY_DATABASE_URI = (
-    f"postgresql://postgres:oilgas@localhost/useful"
-)
+DATABASE_URI = f"""postgres://{os.environ.get("POSTGRES_USER")}:\
+{os.environ.get("POSTGRES_PASSWORD")}@\
+{os.environ.get("POSTGRES_HOST")}/\
+{os.environ.get("POSTGRES_DB")}"""
 
 
 USERS_OPEN_REGISTRATION = True
@@ -42,12 +36,13 @@ EMAIL_RESET_TOKEN_EXPIRE_HOURS = 48
 EMAIL_TEMPLATES_DIR = "src/email-templates/build"
 
 # Email
-# SMTP_TLS = os.environ.get("SMTP_TLS")
-# SMTP_PORT = os.environ.get("SMTP_PORT")
-# SMTP_HOST = os.environ.get("SMTP_HOST")
-# SMTP_USER = os.environ.get("SMTP_USER")
-# SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
-# EMAILS_FROM_EMAIL = os.environ.get("EMAILS_FROM_EMAIL")
+SMTP_TLS = os.environ.get("SMTP_TLS")
+SMTP_PORT = os.environ.get("SMTP_PORT")
+SMTP_HOST = os.environ.get("SMTP_HOST")
+SMTP_USER = os.environ.get("SMTP_USER")
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
+EMAILS_FROM_EMAIL = os.environ.get("EMAILS_FROM_EMAIL")
+
 
 EMAILS_ENABLED = SMTP_HOST and SMTP_PORT and EMAILS_FROM_EMAIL
 EMAIL_TEST_USER = "twopik@gmail"

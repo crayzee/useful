@@ -33,8 +33,11 @@ class BaseService:
     async def get(self):
         pass
 
-    async def delete(self, schema):
-        pass
+    async def get_all(self):
+        return await self.model.all()
+
+    async def delete(self, user_id: int):
+        return await self.model.filter(id=user_id).delete()
 
     async def get_obj(self, **kwargs):
         return await self.model.get_or_none(**kwargs)

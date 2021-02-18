@@ -21,7 +21,7 @@ def user_me(current_user: models.User = Depends(get_user)):
 async def delete_user(user_id: int):
     """ Delete user
     """
-    deleted_count = await service.user_s.delete(id=user_id)
+    deleted_count = await service.user_s.delete(user_id=user_id)
     if not deleted_count:
         raise HTTPException(status_code=404, detail=f"User with id={user_id} not found")
     return schemas.UserStatus(message=f"Deleted user {user_id}")

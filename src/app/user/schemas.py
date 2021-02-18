@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, EmailStr
 from tortoise.contrib.pydantic import pydantic_model_creator
 from .models import User
@@ -69,7 +69,7 @@ class SocialAccount(BaseModel):
     account_name: str = None
     provider: str
     user: UserCreateInRegistration
-    
+
     class Config:
         orm_mode = True
 
@@ -88,11 +88,24 @@ class SocialAccountGet(BaseModel):
         orm_mode = True
 
 
+class UserStatus(BaseModel):
+    message: str
+
+
 class UserPublic(UserBase):
     """ For public profile user
     """
     id: int
-    # social_account: SocialAccount = None
+    #  social_account: SocialAccount = None
+
+    class Config:
+        orm_mode = True
+
+
+class UserPublicList(BaseModel):
+    """ List of all users
+    """
+    users: List[UserBaseInDB]
 
     class Config:
         orm_mode = True

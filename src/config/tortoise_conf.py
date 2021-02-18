@@ -1,5 +1,7 @@
+from src.config.settings import DATABASE_URI
+
 TORTOISE_ORM = {
-    "connections": {"default": "postgres://postgres:oilgas@localhost:5432/useful_test_tortoise"},
+    "connections": DATABASE_URI,
     "apps": {
         'models': {
             "models": ["src.app.user.models", "src.app.auth.models", "aerich.models"],

@@ -17,7 +17,7 @@ class Toolkit(models.Model):
 
 
 class Project(models.Model):
-    """ Model project
+    """ Model for project
     """
     name = fields.CharField(max_length=150)
     description = fields.TextField()

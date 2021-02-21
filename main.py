@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
 
 from src.config import settings
@@ -41,10 +42,16 @@ register_tortoise(
     app,
     #db_url="postgres://postgres:oilgas@localhost:5432/useful_test_tortoise",
     db_url=settings.DATABASE_URI,
-    modules={"models": ["src.app.user.models", "src.app.auth.models", "aerich.models"]},
-    generate_schemas=True,
+    modules={"models": [
+        "src.app.user.models",
+        "src.app.auth.models",
+        "src.app.board.models",
+        "aerich.models"
+     ]},
+    generate_schemas=False,
     add_exception_handlers=True,
 )
+Tortoise.init_models(["src.app.auth.models", "src.app.user.models", "src.app.board.models"], "models")
 
 #
 # if __name__ == "__main__":

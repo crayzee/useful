@@ -1,7 +1,7 @@
 from src.config.settings import DATABASE_URI
 
 TORTOISE_ORM = {
-    "connections": DATABASE_URI,
+    "connections": {"default": DATABASE_URI},
     "apps": {
         'models': {
             "models": [

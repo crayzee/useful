@@ -51,7 +51,7 @@ register_tortoise(
     generate_schemas=False,
     add_exception_handlers=True,
 )
-Tortoise.init_models(["src.app.auth.models", "src.app.user.models", "src.app.board.models"], "models")
+#Tortoise.init_models(["src.app.auth.models", "src.app.user.models", "src.app.board.models"], "models")
 
 #
 # if __name__ == "__main__":

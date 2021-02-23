@@ -30,14 +30,15 @@ class BaseService:
         obj = await self.model.filter(**kwargs).update(**schema.dict(exclude_unset=True))
         return obj #await self.get_schema.from_tortoise_orm(obj)
 
-    async def get(self):
+    async def all(self):
+        print(self.model.all())
+        return await self.get_schema.from_queryset(self.model.all())
+
+    async def get(self, **kwargs):
         pass
-
-    async def get_all(self):
-        return await self.model.all()
-
-    async def delete(self, user_id: int):
-        return await self.model.filter(id=user_id).delete()
 
     async def get_obj(self, **kwargs):
         return await self.model.get_or_none(**kwargs)
+
+    async def delete(self, **kwargs):
+        return await self.model.filter(**kwargs).delete()

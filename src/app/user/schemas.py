@@ -1,4 +1,6 @@
 from typing import Optional, List
+
+from fastapi import Form
 from pydantic import BaseModel, EmailStr
 from tortoise.contrib.pydantic import pydantic_model_creator
 from .models import User
@@ -45,7 +47,7 @@ class UserCreateInRegistration(BaseModel):
 class UserUpdate(UserBaseInDB):
     """ Properties to receive via API on update
     """
-    password: Optional[str] = None
+    password: Optional[str] = Form(...)
 
 
 # class User(UserBaseInDB):

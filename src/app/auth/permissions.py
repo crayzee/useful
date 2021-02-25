@@ -33,14 +33,14 @@ async def get_current_user(token: str = Security(reusable_oauth2)):
 
 
 def get_user(current_user: User = Security(get_current_user)):
-    """Проверка активный юзер или нет"""
+    """ Проверка активный юзер или нет """
     if not current_user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
 
 def get_superuser(current_user: User = Security(get_current_user)):
-    """Проверка суперюзер или нет"""
+    """ Проверка суперюзер или нет """
     if not current_user.is_superuser:
         raise HTTPException(
             status_code=400, detail="The user doesn't have enough privileges"

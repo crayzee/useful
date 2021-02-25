@@ -14,6 +14,8 @@ GetSchemaType = TypeVar("GetSchemaType", bound=BaseModel)
 
 
 class BaseService:
+    """ Base service.
+    """
     model: Type[ModelType]
     create_schema: CreateSchemaType
     update_schema: UpdateSchemaType

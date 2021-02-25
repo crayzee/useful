@@ -46,3 +46,11 @@ EMAILS_FROM_EMAIL = os.environ.get("EMAILS_FROM_EMAIL")
 
 EMAILS_ENABLED = SMTP_HOST and SMTP_PORT and EMAILS_FROM_EMAIL
 EMAIL_TEST_USER = "twopik@gmail"
+
+
+APPS_MODELS = [
+    "src.app.user.models",
+    "src.app.auth.models",
+    "src.app.board.models",
+    "aerich.models",
+]

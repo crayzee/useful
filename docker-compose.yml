@@ -60,6 +60,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./.env.dev
+    command: uvicorn main:app --reload --port 5000 --host 0.0.0.0
     volumes:
       - ./:/app
 
@@ -70,7 +71,7 @@ services:
     # В нашем случае нужно использовать порт компьютера 8000 и организовать его связь с портом
     # 80 контейнера (так как именно на этот порт сервер ожидает поступления запросов).
     ports:
-      - 8000:80
+      - 8000:5000
     restart: always
     
     # Ключевое слово 'depends_on' позволяет указывать, должен ли сервис,
@@ -85,7 +86,7 @@ services:
       
     # Команда, которую нужно запустить после создания образа.
     # Следующая команда означает запуск "python ./server.py".
-    command: /start-reload.sh
+    #command: /start-reload.sh
 
 
 volumes:

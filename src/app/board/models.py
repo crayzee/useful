@@ -1,4 +1,5 @@
-from tortoise import fields, models
+from tortoise import fields, models, Tortoise
+from tortoise.contrib.pydantic import pydantic_model_creator
 
 
 class Category(models.Model):
@@ -34,7 +35,10 @@ class Project(models.Model):
         'models.Category', related_name="projects"
     )
     toolkit = fields.ForeignKeyField('models.Toolkit', related_name="projects")
-    team = fields.ManyToManyField('models.User', related_name="team_projects")
+    team = fields.ManyToManyField(
+        'models.User', related_name="team_projects"
+    )
+# TODO, you should add through="team_projects" in 'team' field
 
 
 class Task(models.Model):
@@ -55,3 +59,9 @@ class CommentTask(models.Model):
     task = fields.ForeignKeyField('models.Task', related_name="comments")
     message = fields.CharField(max_length=1000)
     create_date = fields.DatetimeField(auto_now_add=True)
+
+
+Tortoise.init_models(["src.app.board.models", "src.app.user.models"], "models")
+GetProject = pydantic_model_creator(
+    Project, name="get_project", exclude=('user', 'tasks')
+)

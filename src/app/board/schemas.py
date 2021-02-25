@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel, PydanticListModel
 from . import models
 
+from src.app.user.schemas import UserPublic
+
 
 class CreateCategory(PydanticModel):
     name: str
@@ -64,15 +66,17 @@ class Category(PydanticModel):
     id: int
     name: str
 
-    # class Config:
-    #     orm_mode = True
+    class Config:
+        orm_mode = True
 
 
 class GetProject(PydanticModel):
     name: str
     description: str
     create_date: datetime
-    category: Category
+    # category: Category
+    # toolkit: GetToolkit
+    # team: List[UserPublic]
 
     # class Config:
     #     orm_mode = True

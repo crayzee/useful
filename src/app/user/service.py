@@ -6,6 +6,8 @@ from ..base.service_base import BaseService
 
 
 class UserService(BaseService):
+    """ Crud for user.
+    """
     model = models.User
     create_schema = schemas.UserCreateInRegistration
     update_schema = schemas.UserUpdate

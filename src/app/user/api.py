@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
@@ -11,20 +13,34 @@ user_router = APIRouter()
 
 @user_router.get('/me', response_model=schemas.UserPublic)
 def user_me(current_user: models.User = Depends(get_user)):
-    """ Get user hello there
+    """ Get current user
     """
     if current_user:
         return current_user
 
 
-@user_router.delete('/delete/{user_id}', response_model=schemas.UserStatus, responses={404: {"model": HTTPNotFoundError}})
-async def delete_user(user_id: int):
+@user_router.get('', response_model=List[service.user_s.get_schema])
+async def get_all_users():
+    """ Get all users
+    """
+    return await service.user_s.all()
+
+
+@user_router.post('', response_model=schemas.UserInDB)
+async def create_user(schema: schemas.UserCreate):
+    """ Create user
+    """
+    return await service.user_s.create_user(schema)
+
+
+@user_router.delete('/delete/{pk}', response_model=schemas.UserStatus, responses={404: {"model": HTTPNotFoundError}})
+async def delete_user(pk: int):
     """ Delete user
     """
-    deleted_count = await service.user_s.delete(id=user_id)
+    deleted_count = await service.user_s.delete(id=pk)
     if not deleted_count:
-        raise HTTPException(status_code=404, detail=f"User with id={user_id} not found")
-    return schemas.UserStatus(message=f"Deleted user {user_id}")
+        raise HTTPException(status_code=404, detail=f"Such user with id={pk} is not found")
+    return schemas.UserStatus(message="User has just been deleted")
 
 
 @user_router.get('/all', response_model=schemas.UserPublicList)
@@ -35,3 +51,17 @@ async def user_list():
     return {
         "users": users
     }
+
+
+@user_router.put('/{pk}', response_model=schemas.UserInDB)
+async def update_user(pk: int, schema: schemas.UserUpdate):
+    """ Update user
+    """
+    return await service.user_s.update(schema, id=pk)
+
+
+@user_router.delete('/{pk}', status_code=204)
+async def delete_user(pk: int):
+    """ Delete user.
+    """
+    return await service.user_s.delete(id=pk)

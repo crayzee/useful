@@ -3,7 +3,8 @@ from typing import List
 
 from pydantic import BaseModel
 
-from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel, PydanticListModel
+from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel, PydanticListModel, \
+    pydantic_queryset_creator
 from . import models
 
 from src.app.user.schemas import UserPublic
@@ -14,10 +15,11 @@ class CreateCategory(PydanticModel):
     parent_id: int = None
 
 
-class GetCategory(PydanticModel):
-    id: int
-    name: str
-    #children: List[int] = None
+# class GetCategory(PydanticModel):
+#     id: int
+#     name: str
+
+GetCategory = pydantic_queryset_creator(models.Category)
 
 
 class Project(PydanticModel):

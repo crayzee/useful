@@ -38,7 +38,7 @@ class UserService(BaseService):
     async def create_user_social(self, user: schemas.UserCreateInRegistration):
         return await self.create_user(schema=user, is_active=True)
 
-    def create_superuser(self, schema: schemas.UserCreateInRegistration):
+    async def create_superuser(self, schema: schemas.UserCreateInRegistration):
         hash_password = get_password_hash(schema.dict().pop("password"))
         return await self.create(
             schemas.UserCreate(

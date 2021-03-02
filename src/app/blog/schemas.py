@@ -30,9 +30,9 @@ GetPost = pydantic_model_creator(models.Post, exclude=('published', 'category__c
 
 class OutPost(PydanticModel):
     id: int
-    author: UserPublic # прописано какую схему для автора использовать, мне нужен id и first name только
+    author: UserPublic
     tag: List[GetTag] = []
-    category: CategoryForPost # для категорий нужен только id и name
+    category: CategoryForPost
     title: str
     mini_text: str
     text: str
@@ -46,12 +46,12 @@ class OutPost(PydanticModel):
 CreateComment = pydantic_model_creator(
     models.Comment,
     exclude_readonly=True,
-    exclude=('user_id', 'is_published', 'id_deleted', 'posts')
+    exclude=('user_id', 'is_published', 'is_deleted', 'posts')
 )
 
 GetComment = pydantic_model_creator(
     models.Comment,
-    exlude=('post', 'parent')
+    exclude=('post', 'parent')
 )
 
 

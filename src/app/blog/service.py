@@ -11,7 +11,7 @@ class BlogCategoryService(BaseService):
     model = models.BlogCategory
     create_schema = schemas.CreateCategory
     update_schema = schemas.CreateCategory
-    get_schema =schemas.GetCategory
+    get_schema = schemas.GetCategory
 
 
 class TagService(BaseService):

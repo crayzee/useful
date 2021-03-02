@@ -12,8 +12,8 @@ class BlogCategory(models.Model):
         'models.BlogCategory', on_delete=fields.CASCADE, null=True, related_name='children'
     )
     description = fields.TextField(max_length=300)
-    children: fields.ReverseRelation["BlogCategory"]
-    posts: fields.ReverseRelation["Post"]
+    children: fields.ReverseRelation['BlogCategory']
+    posts: fields.ReverseRelation['Post']
 
     def __str__(self):
         return self.name
@@ -39,10 +39,10 @@ class Post(models.Model):
     author: fields.ForeignKeyRelation['User'] = fields.ForeignKeyField(
         'models.User', related_name='posts', on_delete=fields.CASCADE
     )
-    tag: fields.ManyToManyRelation["Tag"] = fields.ManyToManyField(
+    tag: fields.ManyToManyRelation['Tag'] = fields.ManyToManyField(
         'models.Tag', through='post_tag', null=True, related_name='posts'
     )
-    category: fields.ForeignKeyNullableRelation[BlogCategory] = fields.ForeignKeyField(
+    category: fields.ForeignKeyNullableRelation['BlogCategory'] = fields.ForeignKeyField(
         'models.BlogCategory', null=True, related_name='posts', on_delete=fields.SET_NULL
     )
     title = fields.CharField(max_length=500)
@@ -70,7 +70,7 @@ class Comment(models.Model):
     user: fields.ForeignKeyRelation['User'] = fields.ForeignKeyField(
         'models.User', related_name="comments", on_delete=fields.CASCADE
     )
-    post: fields.ForeignKeyRelation[Post] = fields.ForeignKeyField(
+    post: fields.ForeignKeyRelation['Post'] = fields.ForeignKeyField(
         'models.Post', related_name="comments", on_delete=fields.CASCADE
     )
     parent: fields.ForeignKeyNullableRelation['Comment'] = fields.ForeignKeyField(
@@ -85,7 +85,7 @@ class Comment(models.Model):
     is_published = fields.BooleanField(default=True)
     is_deleted = fields.BooleanField(default=False)
 
-    children: fields.ReverseRelation["Comment"]
+    children: fields.ReverseRelation['Comment']
 
     def __str__(self):
         return "{} - {}".format(self.user, self.post)

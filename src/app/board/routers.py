@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from src.app.board.endpoint import category, toolkit, project, task
 
 

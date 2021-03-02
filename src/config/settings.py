@@ -52,6 +52,6 @@ APPS_MODELS = [
     "src.app.user.models",
     "src.app.auth.models",
     "src.app.board.models",
-    "src.app.blog.models",
+    # "src.app.blog.models",
     "aerich.models",
 ]

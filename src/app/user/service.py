@@ -1,5 +1,7 @@
 from typing import Optional
 
+from tortoise.query_utils import Q
+
 from . import schemas, models
 from ..auth.security import verify_password, get_password_hash
 from ..base.service_base import BaseService
@@ -37,6 +39,9 @@ class UserService(BaseService):
 
     async def create_user_social(self, user: schemas.UserCreateInRegistration):
         return await self.create_user(schema=user, is_active=True)
+
+    async def get_username_email(self, username: str, email: str):
+        return await self.model.get_or_none(Q(username=username) | Q(email=email))
 
     async def create_superuser(self, schema: schemas.UserCreateInRegistration):
         hash_password = get_password_hash(schema.dict().pop("password"))

@@ -36,6 +36,9 @@ class BaseService:
         print(self.model.all())
         return await self.get_schema.from_queryset(self.model.all())
 
+    async def filter(self, **kwargs) -> Optional[GetSchemaType]:
+        return await self.get_schema.from_queryset(self.model.filter(**kwargs))
+
     async def get(self, **kwargs):
         return await self.get_schema.from_queryset_single(self.model.get(**kwargs))
 

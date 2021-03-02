@@ -93,4 +93,4 @@ class Comment(models.Model):
         exclude = ('post',)
 
 
-Tortoise.init_models(["src.app.blog.models"], "models")
+# Tortoise.init_models(["src.app.blog.models"], "models")

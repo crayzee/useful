@@ -33,5 +33,5 @@ async def update_tag(
 
 
 @tag_router.delete('/{pk}', status_code=204)
-async def delete_category(pk: int, user: models.User = Depends(get_superuser)):
+async def delete_tag(pk: int, user: models.User = Depends(get_superuser)):
     return await service.category_s.delete(id=pk)

@@ -33,12 +33,12 @@ async def get_single_post(pk: int):
 
 
 @post_router.put('/{pk}', response_model=schemas.OutPost)
-async def update_category(
+async def update_post(
         pk: int, schema: schemas.CreatePost, user: models.User = Depends(get_superuser)
 ):
     return await service.post_s.update(schema, id=pk, author_id=user.id)
 
 
 @post_router.delete('/{pk}', status_code=204)
-async def delete_comment(pk: int, user: models.User = Depends(get_superuser)):
+async def delete_post(pk: int, user: models.User = Depends(get_superuser)):
     return await service.post_s.delete(id=pk, author_id=user.id)

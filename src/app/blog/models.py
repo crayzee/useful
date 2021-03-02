@@ -1,4 +1,3 @@
-import tortoise
 from tortoise import models, fields, Tortoise
 
 from src.app.user.models import User
@@ -42,7 +41,7 @@ class Post(models.Model):
     tag: fields.ManyToManyRelation['Tag'] = fields.ManyToManyField(
         'models.Tag', through='post_tag', null=True, related_name='posts'
     )
-    category: fields.ForeignKeyNullableRelation['BlogCategory'] = fields.ForeignKeyField(
+    category: fields.ForeignKeyNullableRelation[BlogCategory] = fields.ForeignKeyField(
         'models.BlogCategory', null=True, related_name='posts', on_delete=fields.SET_NULL
     )
     title = fields.CharField(max_length=500)

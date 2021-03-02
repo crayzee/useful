@@ -29,7 +29,7 @@ async def get_single_comment(pk: int):
 
 
 @comment_router.put('/{pk}', response_model=schemas.OutComment)
-async def update_category(
+async def update_comment(
         pk: int, schema: schemas.UpdateComment, user: models.User = Depends(get_user)
 ):
     return await service.comment_s.update(schema, id=pk, user_id=user.id)

@@ -1,25 +1,21 @@
 from datetime import datetime
 from typing import List
-
-from pydantic import BaseModel
-
-from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel, PydanticListModel, \
-    pydantic_queryset_creator
+from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel
 from . import models
 
 from src.app.user.schemas import UserPublic
 
 
-class CreateCategory(PydanticModel):
-    name: str
-    parent_id: int = None
+# class CreateCategory(PydanticModel):
+#     name: str
+#     parent_id: int = None
 
 
 # class GetCategory(PydanticModel):
 #     id: int
 #     name: str
-
-GetCategory = pydantic_queryset_creator(models.Category)
+CreateCategory = pydantic_model_creator(models.Category, exclude_readonly=True)
+GetCategory = pydantic_model_creator(models.Category)
 
 
 class Project(PydanticModel):
@@ -37,15 +33,15 @@ class GetCategoryProject(PydanticModel):
         orm_mode = True
 
 
-class CategoryStatus(BaseModel):
-    message: str
+# class CategoryStatus(BaseModel):
+#     message: str
 
 
-class GetCategories(BaseModel):
-    categories: List[GetCategory]
-
-    class Config:
-        orm_mode = True
+# class GetCategories(BaseModel):
+#     categories: List[GetCategory]
+#
+#     class Config:
+#         orm_mode = True
 
 
 class CreateToolkit(PydanticModel):

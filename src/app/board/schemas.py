@@ -1,40 +1,41 @@
 from datetime import datetime
 from typing import List
+
+from pydantic.main import BaseModel
 from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel
 from . import models
-
+from ..user.schemas import UserPublic
 
 CreateCategory = pydantic_model_creator(models.Category, exclude_readonly=True)
 GetCategory = pydantic_model_creator(models.Category)
+
+# OutCategory = pydantic_model_creator(models.Category, include=('id', 'name'), exclude=('children',))
+class OutCategory(BaseModel):
+    id: int
+    name: str
 
 
 CreateToolkit = pydantic_model_creator(models.Toolkit, exclude_readonly=True)
 GetToolkit = pydantic_model_creator(models.Toolkit, name='get_toolkit')
 
 
-class Project(PydanticModel):
+class OutToolkit(BaseModel):
+    id: int
+    name: str
+
+
+CreateProject = pydantic_model_creator(models.Project, exclude=('user_id',), exclude_readonly=True)
+GetProject = pydantic_model_creator(models.Project, name='get_project')
+
+
+class OutProject(PydanticModel):
+    id: int
     name: str
     description: str
     create_date: datetime
-
-
-class GetCategoryProject(PydanticModel):
-    id: int
-    name: str
-    projects: List[Project]
-
-    class Config:
-        orm_mode = True
-
-
-
-
-class CreateProject(PydanticModel):
-    name: str
-    description: str
-    category_id: int
-    toolkit_id: int
-    user_id: int
+    user: UserPublic
+    category: OutCategory
+    toolkit: OutToolkit
 
 
 class Category(PydanticModel):
@@ -43,18 +44,6 @@ class Category(PydanticModel):
 
     class Config:
         orm_mode = True
-
-
-class GetProject(PydanticModel):
-    name: str
-    description: str
-    create_date: datetime
-    # category: Category
-    # toolkit: GetToolkit
-    # team: List[UserPublic]
-
-    # class Config:
-    #     orm_mode = True
 
 
 class CreateTask(PydanticModel):

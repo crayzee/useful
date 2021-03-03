@@ -3,19 +3,13 @@ from typing import List
 from tortoise.contrib.pydantic import pydantic_model_creator, PydanticModel
 from . import models
 
-from src.app.user.schemas import UserPublic
 
-
-# class CreateCategory(PydanticModel):
-#     name: str
-#     parent_id: int = None
-
-
-# class GetCategory(PydanticModel):
-#     id: int
-#     name: str
 CreateCategory = pydantic_model_creator(models.Category, exclude_readonly=True)
 GetCategory = pydantic_model_creator(models.Category)
+
+
+CreateToolkit = pydantic_model_creator(models.Toolkit, exclude_readonly=True)
+GetToolkit = pydantic_model_creator(models.Toolkit, name='get_toolkit')
 
 
 class Project(PydanticModel):
@@ -33,23 +27,6 @@ class GetCategoryProject(PydanticModel):
         orm_mode = True
 
 
-# class CategoryStatus(BaseModel):
-#     message: str
-
-
-# class GetCategories(BaseModel):
-#     categories: List[GetCategory]
-#
-#     class Config:
-#         orm_mode = True
-
-
-class CreateToolkit(PydanticModel):
-    name: str
-    parent_id: int = None
-
-
-GetToolkit = pydantic_model_creator(models.Toolkit, name='get_toolkit')
 
 
 class CreateProject(PydanticModel):

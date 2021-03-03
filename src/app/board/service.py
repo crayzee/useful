@@ -1,5 +1,6 @@
 from . import schemas, models
 from ..base.service_base import BaseService
+from ..user.models import User
 
 
 class CategoryService(BaseService):
@@ -18,6 +19,16 @@ class ProjectService(BaseService):
     model = models.Project
     create_schema = schemas.CreateProject
     get_schema = schemas.GetProject
+
+    async def create_team(self, schema: schemas.CreateTeam, user: User):
+        # TODO I need to create invitation to users to join a team
+        # TODO Maybe I need to create another model of a team
+        # TODO project O2O Team or Project FK Team
+        _project = await self.get_obj(id=schema.project, user=user)
+        _users = await User.filter(id__in=schema.team)
+        # print(_users)
+        await _project.team.add(*_users)
+        return schema
 
 
 class TaskService(BaseService):

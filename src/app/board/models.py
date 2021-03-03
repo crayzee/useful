@@ -7,14 +7,13 @@ class Category(models.Model):
     """ Categories by project
     """
     name = fields.CharField(max_length=150)
-    parent: fields.ForeignKeyNullableRelation['Category'] = fields.ForeignKeyField(
+    parent: fields.ForeignKeyNullableRelation["Category"] = fields.ForeignKeyField(
         "models.Category", related_name="children", null=True
     )
-    children: fields.ReverseRelation['Category']
-    projects: fields.ReverseRelation['Project']
+    children: fields.ReverseRelation["Category"]
+    projects: fields.ReverseRelation["Project"]
 
     class PydanticMeta:
-        backward_relations = False
         exclude = ['projects', 'parent']
         allow_cycles = True
         max_recursion = 4

@@ -1,6 +1,7 @@
 from . import schemas, models
 from ..base.service_base import BaseService
 from ..user.models import User
+from src.lib.github_api.service import github_s
 
 
 class CategoryService(BaseService):
@@ -19,6 +20,10 @@ class ProjectService(BaseService):
     model = models.Project
     create_schema = schemas.CreateProject
     get_schema = schemas.GetProject
+
+    async def create_project(self, schema, user: User, repo_name: str):
+        _repo = await github_s.get_repo(user.username, repo_name)
+        return _repo
 
     async def create_team(self, schema: schemas.CreateTeam, user: User):
         # TODO I need to create invitation to users to join a team

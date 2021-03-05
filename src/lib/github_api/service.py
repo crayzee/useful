@@ -13,7 +13,7 @@ class GithubService:
         except GithubException:
             raise HTTPException(status_code=404, detail='Repository does not exist')
         git_repo = GitHubRepo(
-            id=repo.id,
+            repo_id=repo.id,
             created_at=repo.created_at,
             updated_at=repo.updated_at,
             stars=repo.stargazers_count,

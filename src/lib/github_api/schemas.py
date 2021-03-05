@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class GitHubRepo(BaseModel):
-    id: int
+    repo_id: int
     created_at: datetime
     updated_at: datetime
     stars: int

@@ -22,6 +22,7 @@ class ProjectService(BaseService):
     get_schema = schemas.GetProject
 
     async def create_project(self, schema, user: User, repo_name: str):
+        # TODO check if a project is a fork or not
         _repo = await github_s.get_repo(user.username, repo_name)
         return _repo
 
